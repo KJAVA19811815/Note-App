@@ -13,13 +13,32 @@ var command = process.argv[2];
 console.log('YARGS ', argv);
 
 if(command === 'add') {
-  notes.addNote(argv.title, argv.body)
+  var note = notes.addNote(argv.title, argv.body);
+  if(note) {
+    console.log("note created");
+    console.log('title ' +  note.title);
+    console.log(`body: ${note.body}`);
+
+
+  } else {
+    console.log("note title taken");
+  }
 } else if (command === 'list') {
   notes.getAll();
 } else if (command === 'read') {
-  notes.readNote(argv.title);
+  var note = notes.getNote(argv.title);
+  if(note){
+    console.log('note found');
+    console.log('title ' +  note.title);
+    console.log(`body: ${note.body}`);
+  } else {
+    console.log('note not found');
+
+  }
 } else if (command === 'remove') {
-  notes.removeNote(argv.title);
+  var noteRemoved = notes.removeNote(argv.title);
+  var message = noteRemoved ? 'Note was removed' : 'Note not found';
+  console.log(message);
 } else {
   console.log('command note recoganised');
 }
